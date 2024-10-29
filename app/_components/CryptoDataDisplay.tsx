@@ -20,16 +20,13 @@ import CryptoGraph from "../_components/CryptoGraph";
 import { CryptoCurrency } from "../_utils/constants";
 import React from "react";
 
-const CryptoDataDisplay: React.FC<{}> = () => {
+const CryptoDataDisplay = () => {
   const { cryptoData, incomingData } = useCurrenciesSocket();
 
   const [selectedCurrency, setSelectedCurrency] =
     useState<CryptoCurrency | null>(CryptoCurrency.All);
 
-  const handleCurrencyChange = (
-    event: SelectChangeEvent<CryptoCurrency>,
-    child: React.ReactNode
-  ) => {
+  const handleCurrencyChange = (event: SelectChangeEvent<CryptoCurrency>) => {
     setSelectedCurrency(event.target.value as CryptoCurrency);
   };
 

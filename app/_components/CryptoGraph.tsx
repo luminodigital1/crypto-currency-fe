@@ -32,7 +32,6 @@ interface CryptoGraphProps {
 
 const formatDate = (timestamp: Date) => {
   const date = new Date(timestamp);
-
   return `${date.getDate().toString().padStart(2, "0")}/${(date.getMonth() + 1)
     .toString()
     .padStart(2, "0")}/${date.getFullYear()}, ${date
@@ -48,13 +47,13 @@ const CryptoGraph: React.FC<CryptoGraphProps> = ({
   data,
   selectedCurrency,
 }) => {
-  const [chartData, setChartData] = useState<any>({
+  const [chartData, setChartData] = useState<ChartData>({
     labels: [],
-    datasets: [] as any[],
+    datasets: [],
   });
 
   useEffect(() => {
-    const newDatasets = [];
+    const newDatasets: Dataset[] = [];
     let timestamps: Date[] = [];
 
     if (

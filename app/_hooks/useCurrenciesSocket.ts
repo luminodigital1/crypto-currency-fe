@@ -1,12 +1,11 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { io, Socket } from "socket.io-client";
+import { io } from "socket.io-client";
 
 const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_SERVER_URL;
 
 export const useCurrenciesSocket = () => {
-  const [socket, setSocket] = useState<Socket | null>(null);
   const [cryptoData, setCryptoData] = useState<{
     [key: string]: { percentageChange: number[]; timestamps: Date[] };
   }>({});
@@ -43,8 +42,6 @@ export const useCurrenciesSocket = () => {
     newSocket.on("disconnect", () => {
       console.log("Disconnected from WebSocket server");
     });
-
-    setSocket(newSocket);
 
     return () => {
       newSocket.close();

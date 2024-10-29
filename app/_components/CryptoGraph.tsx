@@ -26,9 +26,23 @@ ChartJS.register(
 );
 
 interface CryptoGraphProps {
-  data: { [key: string]: { percentageChange: number[]; timestamps: string[] } };
+  data: { [key: string]: { percentageChange: number[]; timestamps: Date[] } };
   selectedCurrency?: CryptoCurrency | null;
 }
+
+const formatDate = (timestamp: Date) => {
+  const date = new Date(timestamp);
+
+  return `${date.getDate().toString().padStart(2, "0")}/${(date.getMonth() + 1)
+    .toString()
+    .padStart(2, "0")}/${date.getFullYear()}, ${date
+    .getHours()
+    .toString()
+    .padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}:${date
+    .getSeconds()
+    .toString()
+    .padStart(2, "0")}`;
+};
 
 const CryptoGraph: React.FC<CryptoGraphProps> = ({
   data,
@@ -41,7 +55,7 @@ const CryptoGraph: React.FC<CryptoGraphProps> = ({
 
   useEffect(() => {
     const newDatasets = [];
-    let timestamps: string[] = [];
+    let timestamps: Date[] = [];
 
     if (
       selectedCurrency &&
@@ -80,9 +94,7 @@ const CryptoGraph: React.FC<CryptoGraphProps> = ({
     }
 
     setChartData({
-      labels: timestamps.map((timestamp) =>
-        new Date(timestamp).toLocaleString()
-      ),
+      labels: timestamps.map((timestamp) => formatDate(timestamp)),
       datasets: newDatasets,
     });
   }, [data, selectedCurrency]);

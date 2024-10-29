@@ -8,7 +8,7 @@ const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_SERVER_URL;
 export const useCurrenciesSocket = () => {
   const [socket, setSocket] = useState<Socket | null>(null);
   const [cryptoData, setCryptoData] = useState<{
-    [key: string]: { percentageChange: number[]; timestamps: string[] };
+    [key: string]: { percentageChange: number[]; timestamps: Date[] };
   }>({});
   const [incomingData, setIncomingData] = useState<CryptoData[]>([]);
 
@@ -34,9 +34,7 @@ export const useCurrenciesSocket = () => {
         }
 
         cryptoDataRef.current[currency].percentageChange.push(percentageChange);
-        cryptoDataRef.current[currency].timestamps.push(
-          currentTime.toLocaleString()
-        );
+        cryptoDataRef.current[currency].timestamps.push(new Date(currentTime));
       });
 
       setCryptoData({ ...cryptoDataRef.current });

@@ -94,7 +94,7 @@ const CryptoTable: React.FC<CryptoTableProps> = ({ data }) => {
                       color: crypto.percentageChange > 0 ? "green" : "red",
                     }}
                   >
-                    {crypto.percentageChange * 100}%
+                    {crypto.percentageChange}%
                   </Typography>
                 </TableCell>
               </TableRow>

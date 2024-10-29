@@ -11,4 +11,20 @@ export enum CryptoCurrency {
   Ripple = "ripple",
   Polkadot = "polkadot",
   Avalanche = "avalanche",
+  All = "all currencies",
 }
+
+export const colorMapping: { [key: string]: string } = {
+  [CryptoCurrency.Bitcoin]: "rgba(255, 206, 86, 1)",
+  [CryptoCurrency.Ethereum]: "rgba(54, 162, 235, 1)",
+  [CryptoCurrency.Tether]: "rgba(15, 183, 78, 1)",
+  [CryptoCurrency.BNB]: "rgba(255, 194, 0, 1)",
+  [CryptoCurrency.Solana]: "rgba(0, 128, 128, 1)",
+  [CryptoCurrency.USDC]: "rgba(0, 156, 255, 1)",
+  [CryptoCurrency.Dogecoin]: "rgba(255, 165, 0, 1)",
+  [CryptoCurrency.TRON]: "rgba(255, 50, 50, 1)",
+  [CryptoCurrency.Cardano]: "rgba(0, 100, 255, 1)",
+  [CryptoCurrency.Ripple]: "rgba(0, 200, 255, 1)",
+  [CryptoCurrency.Polkadot]: "rgba(255, 0, 128, 1)",
+  [CryptoCurrency.Avalanche]: "rgba(240, 62, 62, 1)",
+};

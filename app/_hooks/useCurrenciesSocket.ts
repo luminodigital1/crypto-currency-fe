@@ -1,37 +1,55 @@
-
 "use client";
 
-import { useEffect, useState } from 'react';
-import { io, Socket } from 'socket.io-client';
+import { useEffect, useState } from "react";
+import { io, Socket } from "socket.io-client";
 
-const SOCKET_URL = 'http://localhost:3000';
+const SOCKET_URL = "http://localhost:3000";
 
 export const useCurrenciesSocket = () => {
-    const [socket, setSocket] = useState<Socket | null>(null);
-    const [cryptoData, setCryptoData] = useState<CryptoData[]>([]);
+  const [socket, setSocket] = useState<Socket | null>(null);
+  const [cryptoData, setCryptoData] = useState<{
+    [key: string]: { prices: number[]; timestamps: string[] };
+  }>({});
 
-    useEffect(() => {
-        const newSocket = io(SOCKET_URL);
+  const [incomingData, setIncomingData] = useState<CryptoData[]>([]);
 
-        newSocket.on('connect', () => {
-            console.log('Connected to WebSocket server');
-        });
+  useEffect(() => {
+    const newSocket = io(SOCKET_URL);
 
-        newSocket.on('cryptoCurrencies', (data) => {
-            console.log('Received crypto data:', data);
-            setCryptoData(data);
-        });
+    newSocket.on("connect", () => {
+      console.log("Connected to WebSocket server");
+    });
 
-        newSocket.on('disconnect', () => {
-            console.log('Disconnected from WebSocket server');
-        });
+    newSocket.on("cryptoCurrencies", (data) => {
+      console.log("Received crypto data:", data);
+      setIncomingData(data);
 
-        setSocket(newSocket);
+      data.forEach(
+        (newData: { currency: any; price: any; currentTime: any }) => {
+          const { currency, price, currentTime } = newData;
 
-        return () => {
-            newSocket.close();
-        };
-    }, []);
+          if (!cryptoData[currency]) {
+            cryptoData[currency] = { prices: [], timestamps: [] };
+          }
 
-    return { cryptoData };
+          cryptoData[currency].prices.push(price);
+          cryptoData[currency].timestamps.push(currentTime);
+
+          setCryptoData({ ...cryptoData });
+        }
+      );
+    });
+
+    newSocket.on("disconnect", () => {
+      console.log("Disconnected from WebSocket server");
+    });
+
+    setSocket(newSocket);
+
+    return () => {
+      newSocket.close();
+    };
+  }, [cryptoData, incomingData]);
+
+  return { cryptoData, incomingData };
 };

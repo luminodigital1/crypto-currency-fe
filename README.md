@@ -56,6 +56,9 @@ To get started with this project, follow these steps:
 
    Navigate to `http://localhost:3005` in your browser to view the application.
 
+5. **Live Testing:**
+   For live testing, navigate to `https://crypto-currency-fe.vercel.app/` in your browser to view the application.
+
 ## Usage
 
 - Select a cryptocurrency from the dropdown menu to get data of selected currency on graph.

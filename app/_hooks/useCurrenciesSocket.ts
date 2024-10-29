@@ -6,12 +6,6 @@ import { io, Socket } from 'socket.io-client';
 
 const SOCKET_URL = 'http://localhost:3000';
 
-interface CryptoData {
-    name: string;
-    price: number;
-    currentTime: number;
-  }
-
 export const useCurrenciesSocket = () => {
     const [socket, setSocket] = useState<Socket | null>(null);
     const [cryptoData, setCryptoData] = useState<CryptoData[]>([]);
